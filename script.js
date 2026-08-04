@@ -1,132 +1,103 @@
-const lines = [
-
-"Initializing...",
-
-"Face Recognition... ✔ Match Found",
-
-"Voice Recognition... ✔ Match Found",
-
-"Human Verification... ✔ Human Confirmed",
-
-"Decrypting Audio..."
-
+const texts = [
+    "Initializing...",
+    "Face Recognition...",
+    "✔ Match Found",
+    "Voice Recognition...",
+    "✔ Match Found",
+    "Human Verification...",
+    "✔ Human Confirmed",
+    "Decrypting Audio..."
 ];
 
 
 let index = 0;
 
-
-
-const line = document.getElementById("line");
-
+const boot = document.getElementById("boot");
+const button = document.getElementById("playBtn");
+const audio = document.getElementById("voice");
 
 
 function typeText(text, callback){
 
+    let i = 0;
 
-let i=0;
+    let interval = setInterval(()=>{
 
+        document.getElementById("line").innerHTML += text[i];
 
-line.innerHTML="";
-
-
-let timer=setInterval(()=>{
-
-
-line.innerHTML += text[i];
+        i++;
 
 
-i++;
+        if(i >= text.length){
+
+            clearInterval(interval);
 
 
-if(i >= text.length){
+            setTimeout(()=>{
+
+                document.getElementById("line").innerHTML = "";
+
+                callback();
+
+            },2000);
+
+        }
 
 
-clearInterval(timer);
-
-
-setTimeout(callback,2000);
-
-
-}
-
-
-},50);
-
-
+    },80);
 
 }
 
 
 
 
-function startBoot(){
+function start(){
+
+    if(index < texts.length){
 
 
-if(index < lines.length){
+        typeText(texts[index],()=>{
+
+            index++;
+
+            start();
+
+        });
 
 
-typeText(lines[index],()=>{
+    }
+
+    else{
 
 
-index++;
+        setTimeout(()=>{
 
-startBoot();
+            boot.style.display="none";
 
-
-});
-
-
-}
+            button.style.display="inline-block";
 
 
-else{
+        },1000);
 
 
-setTimeout(()=>{
-
-
-document.getElementById("boot").style.display="none";
-
-
-document.getElementById("playBtn").style.display="inline-block";
-
-
-},1000);
-
-
+    }
 
 }
 
 
-
-}
-
-
-
-startBoot();
+start();
 
 
 
 
 
-const btn=document.getElementById("playBtn");
+button.onclick=function(){
 
-const audio=document.getElementById("voice");
+    button.style.display="none";
 
-
-
-btn.onclick=function(){
-
-
-btn.style.display="none";
-
-
-audio.play();
-
+    audio.play();
 
 };
-
 
 
 
@@ -135,116 +106,62 @@ audio.play();
 audio.onended=function(){
 
 
-
-document.getElementById("ending").style.display="block";
-
+    document.getElementById("ending").style.display="block";
 
 
-let messages=[
+    let progress = 0;
 
-"Deleting cache...",
 
-"Removing traces...",
+    let bar = document.getElementById("progress");
 
-"Wiping memory..."
-
-];
+    let percent = document.getElementById("percent");
 
 
 
-let m=0;
+    let timer=setInterval(()=>{
+
+
+        progress++;
+
+
+        bar.style.width = progress+"%";
+
+        percent.innerHTML = progress+"%";
 
 
 
-let msgInterval=setInterval(()=>{
+        if(progress >=100){
 
 
-document.getElementById("deleteText").innerHTML=messages[m];
+            clearInterval(timer);
 
 
-m++;
+
+            setTimeout(()=>{
 
 
-if(m>=messages.length){
+                document.getElementById("makima").style.display="block";
 
 
-clearInterval(msgInterval);
+                setTimeout(()=>{
 
 
-startLoading();
+                    location.reload();
 
 
-}
+                },1000);
 
 
-},1500);
+            },500);
+
+
+
+        }
+
+
+
+    },40);
 
 
 
 };
-
-
-
-
-
-function startLoading(){
-
-
-let value=0;
-
-
-let progress=document.getElementById("progress");
-
-let percent=document.getElementById("percent");
-
-
-
-let timer=setInterval(()=>{
-
-
-value++;
-
-
-progress.style.width=value+"%";
-
-percent.innerHTML=value+"%";
-
-
-
-if(value>=100){
-
-
-clearInterval(timer);
-
-
-
-setTimeout(()=>{
-
-
-document.getElementById("makima").style.display="block";
-
-
-
-setTimeout(()=>{
-
-
-location.reload();
-
-
-},1500);
-
-
-
-},500);
-
-
-
-}
-
-
-
-},35);
-
-
-
-} 
