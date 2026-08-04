@@ -1,103 +1,128 @@
 const texts = [
-    "Initializing...",
-    "Face Recognition...",
-    "✔ Match Found",
-    "Voice Recognition...",
-    "✔ Match Found",
-    "Human Verification...",
-    "✔ Human Confirmed",
-    "Decrypting Audio..."
+
+"Initializing...",
+
+"Face Recognition... ✔ Match Found",
+
+"Voice Recognition... ✔ Match Found",
+
+"Human Verification... ✔ Human Confirmed",
+
+"Decrypting Audio...",
+
 ];
 
 
 let index = 0;
 
-const boot = document.getElementById("boot");
-const button = document.getElementById("playBtn");
-const audio = document.getElementById("voice");
+
+const line = document.getElementById("line");
 
 
-function typeText(text, callback){
-
-    let i = 0;
-
-    let interval = setInterval(()=>{
-
-        document.getElementById("line").innerHTML += text[i];
-
-        i++;
+function typeText(text, done){
 
 
-        if(i >= text.length){
-
-            clearInterval(interval);
+let i = 0;
 
 
-            setTimeout(()=>{
-
-                document.getElementById("line").innerHTML = "";
-
-                callback();
-
-            },2000);
-
-        }
+line.innerHTML="";
 
 
-    },80);
+let timer=setInterval(()=>{
+
+
+line.innerHTML += text[i];
+
+
+i++;
+
+
+if(i >= text.length){
+
+
+clearInterval(timer);
+
+
+setTimeout(done,2000);
+
+
+}
+
+
+},80);
+
+
 
 }
 
 
 
 
-function start(){
-
-    if(index < texts.length){
+function startBoot(){
 
 
-        typeText(texts[index],()=>{
-
-            index++;
-
-            start();
-
-        });
+if(index < texts.length){
 
 
-    }
-
-    else{
+typeText(texts[index],()=>{
 
 
-        setTimeout(()=>{
+index++;
 
-            boot.style.display="none";
-
-            button.style.display="inline-block";
+startBoot();
 
 
-        },1000);
+});
 
-
-    }
 
 }
 
 
-start();
+else{
 
 
+setTimeout(()=>{
+
+
+document.getElementById("boot").style.display="none";
+
+
+document.getElementById("playBtn").style.display="inline-block";
+
+
+},1000);
+
+
+}
+
+
+}
+
+
+
+startBoot();
+
+
+
+
+
+const button=document.getElementById("playBtn");
+
+const audio=document.getElementById("voice");
 
 
 
 button.onclick=function(){
 
-    button.style.display="none";
 
-    audio.play();
+button.style.display="none";
+
+
+audio.play();
+
 
 };
+
 
 
 
@@ -106,61 +131,64 @@ button.onclick=function(){
 audio.onended=function(){
 
 
-    document.getElementById("ending").style.display="block";
+document.getElementById("ending").style.display="block";
 
 
-    let progress = 0;
+let progress=0;
 
 
-    let bar = document.getElementById("progress");
+let bar=document.getElementById("progress");
 
-    let percent = document.getElementById("percent");
-
-
-
-    let timer=setInterval(()=>{
-
-
-        progress++;
-
-
-        bar.style.width = progress+"%";
-
-        percent.innerHTML = progress+"%";
+let percent=document.getElementById("percent");
 
 
 
-        if(progress >=100){
+let timer=setInterval(()=>{
 
 
-            clearInterval(timer);
+progress++;
 
 
-
-            setTimeout(()=>{
-
-
-                document.getElementById("makima").style.display="block";
+bar.style.width=progress+"%";
 
 
-                setTimeout(()=>{
-
-
-                    location.reload();
-
-
-                },1000);
-
-
-            },500);
+percent.innerHTML=progress+"%";
 
 
 
-        }
+if(progress>=100){
+
+
+clearInterval(timer);
 
 
 
-    },40);
+setTimeout(()=>{
+
+
+document.getElementById("makima").style.display="block";
+
+
+
+setTimeout(()=>{
+
+
+location.reload();
+
+
+},1000);
+
+
+
+},500);
+
+
+
+}
+
+
+
+},40);
 
 
 
