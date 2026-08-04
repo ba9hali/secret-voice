@@ -1,86 +1,250 @@
-const texts = [
+const lines = [
+
 "Initializing...",
+
 "Face Recognition... ✔ Match Found",
+
 "Voice Recognition... ✔ Match Found",
+
 "Human Verification... ✔ Human Confirmed",
-"Decrypting Audio... ██████████ 100%"
+
+"Decrypting Audio..."
+
 ];
 
 
 let index = 0;
 
 
-function typeLine(){
 
-    if(index < texts.length){
+const line = document.getElementById("line");
 
-        let id="line"+(index+1);
-        let element=document.getElementById(id);
 
-        element.innerHTML=texts[index];
 
-        element.style.opacity=1;
+function typeText(text, callback){
 
-        index++;
 
-        setTimeout(typeLine,1000);
+let i=0;
 
-    }
 
-    else {
+line.innerHTML="";
 
-        setTimeout(()=>{
 
-            document.getElementById("boot").style.display="none";
+let timer=setInterval(()=>{
 
-            document.getElementById("playBtn").style.display="inline-block";
 
-        },1000);
+line.innerHTML += text[i];
 
-    }
+
+i++;
+
+
+if(i >= text.length){
+
+
+clearInterval(timer);
+
+
+setTimeout(callback,2000);
+
+
+}
+
+
+},50);
+
+
 
 }
 
 
 
-typeLine();
+
+function startBoot(){
+
+
+if(index < lines.length){
+
+
+typeText(lines[index],()=>{
+
+
+index++;
+
+startBoot();
+
+
+});
+
+
+}
+
+
+else{
+
+
+setTimeout(()=>{
+
+
+document.getElementById("boot").style.display="none";
+
+
+document.getElementById("playBtn").style.display="inline-block";
+
+
+},1000);
+
+
+
+}
+
+
+
+}
+
+
+
+startBoot();
+
+
 
 
 
 const btn=document.getElementById("playBtn");
+
 const audio=document.getElementById("voice");
+
 
 
 btn.onclick=function(){
 
-    btn.style.display="none";
 
-    audio.play();
+btn.style.display="none";
+
+
+audio.play();
+
 
 };
+
+
+
 
 
 
 audio.onended=function(){
 
 
-    document.getElementById("ending").style.display="block";
+
+document.getElementById("ending").style.display="block";
 
 
-    setTimeout(()=>{
+
+let messages=[
+
+"Deleting cache...",
+
+"Removing traces...",
+
+"Wiping memory..."
+
+];
 
 
-        document.getElementById("makima").style.display="block";
+
+let m=0;
 
 
-        setTimeout(()=>{
 
-            location.reload();
-
-        },1000);
+let msgInterval=setInterval(()=>{
 
 
-    },2000);
+document.getElementById("deleteText").innerHTML=messages[m];
+
+
+m++;
+
+
+if(m>=messages.length){
+
+
+clearInterval(msgInterval);
+
+
+startLoading();
+
+
+}
+
+
+},1500);
+
 
 
 };
+
+
+
+
+
+function startLoading(){
+
+
+let value=0;
+
+
+let progress=document.getElementById("progress");
+
+let percent=document.getElementById("percent");
+
+
+
+let timer=setInterval(()=>{
+
+
+value++;
+
+
+progress.style.width=value+"%";
+
+percent.innerHTML=value+"%";
+
+
+
+if(value>=100){
+
+
+clearInterval(timer);
+
+
+
+setTimeout(()=>{
+
+
+document.getElementById("makima").style.display="block";
+
+
+
+setTimeout(()=>{
+
+
+location.reload();
+
+
+},1500);
+
+
+
+},500);
+
+
+
+}
+
+
+
+},35);
+
+
+
+} 
