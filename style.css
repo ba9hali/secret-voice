@@ -1,40 +1,143 @@
-    font-family:monospace;
-    font-size:18px;
+body {
 
-    cursor:pointer;
-    border-radius:8px;
+margin:0;
+
+height:100vh;
+
+background:#050505;
+
+color:#00ff66;
+
+font-family:monospace;
+
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
 
 }
+
+
+
+.container {
+
+text-align:center;
+
+width:90%;
+
+}
+
+
+
+h2 {
+
+font-size:35px;
+
+}
+
+
+
+#line {
+
+font-size:20px;
+
+min-height:30px;
+
+}
+
+
+
+button {
+
+
+display:none;
+
+
+background:#00ff66;
+
+color:#000;
+
+
+border:none;
+
+
+padding:15px 30px;
+
+
+font-size:18px;
+
+
+font-family:monospace;
+
+
+cursor:pointer;
+
+
+border-radius:10px;
+
+
+}
+
 
 
 button:hover {
-    box-shadow:0 0 20px #00ff66;
+
+box-shadow:0 0 20px #00ff66;
+
 }
+
 
 
 
 #ending {
 
-    display:none;
-    font-size:22px;
+display:none;
+
+font-size:22px;
 
 }
 
 
 
-#loading {
+#bar {
 
-    margin-top:20px;
+width:280px;
+
+height:20px;
+
+
+border:1px solid #00ff66;
+
+
+margin:20px auto;
 
 }
+
+
+
+#progress {
+
+width:0%;
+
+height:100%;
+
+
+background:#00ff66;
+
+
+}
+
 
 
 #makima {
 
-    display:none;
+display:none;
 
-    color:red;
+color:red;
 
-    font-size:28px;
+
+font-size:28px;
 
 }
